@@ -42,5 +42,5 @@ class ScrapeView(View):
 class ASCIIView(View):
     def get(self, request):
         url = request.GET.get('image-url')
-        output = subprocess.check_output(['jp2a', url])
+        output = subprocess.check_output(['jp2a', '--width=100', url])
         return HttpResponse(output)
