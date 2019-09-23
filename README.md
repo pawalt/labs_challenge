@@ -22,7 +22,7 @@ I then used the [django-base](https://github.com/pennlabs/) repo to build a dock
 
 ### Kubernetes
 
-I then made [a deployment file](k8s/labs-challenge.yaml) and deployed it to my kubernetes cluster. This cluster is in my homelab created using some [automated deployment files](https://pwpon500.github.io/posts/2019/07/automating-k3s-deployment-on-proxmox/) I created. Because the whole deploy process is automated, I could kill the entire cluster and recreate it in minutes with no reprecussions.
+I then made [a deployment file](k8s/labs-challenge.yaml) and deployed it to my Kubernetes cluster. This cluster is in my homelab created using some [automated deployment files](https://pwpon500.github.io/posts/2019/07/automating-k3s-deployment-on-proxmox/) I created. Because the whole deploy process is automated, I could kill the entire cluster and recreate it in minutes with no repercussions.
 
 ### Database
 
