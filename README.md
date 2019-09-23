@@ -1,66 +1,35 @@
-# Django Template
+# My Labs Challenge
 
-This folder contains all the sample configuration needed to create a fully functioning django app following all of Penn Labs' suggested configuration.
+## API Docs (for routes not documented in challenge)
 
-# Installation
-In a new folder run `django-admin startproject <name of project>`, replacing `<name of project>` with the desired name for your project.
+|Route|Method|Data|Return|
+|---|---|---|---|
+|`/scrape`|GET|N/A|Sucess if scrape was successful|
+|`/api/clubs`|POST|JSON list (parameter `data`) with maps containing `name :: string`,`description :: string`, `tags :: string list`|Success if addition was successful|
+|`/ascii`|GET|String (parameter `image-url`) containing a HTTP-only url of an image|That image in ASCII art|
 
-Run `cd <name of project>`, this folder is where you should run `git init` and configure git.
+## Info on my setup
 
-Copy everything from this folder in the templates repo to this folder.
+This is all hosted at [https://labs.walthome.duckdns.org/](https://labs.walthome.duckdns.org/)
 
-Copy urls.py to `<name of project>/urls.py`
+### Django
 
-Delete `<name of project>/settings.py`
+This Django boilerplate is taken from the [template-django](https://github.com/pennlabs/template-django/) repository and modified appropriately.
 
-Move the settings folder to `<name of project>/settings/`
+### Docker
 
-Edit `<name of project>/wsgi.py` and `manage.py` to replace `<name of project>.settings` with `<name of project>.settings.development`
+I then used the [django-base](https://github.com/pennlabs/) repo to build a docker image. There was just one problem. Armaan only half-finished the repo. I made a few pull requests and now the thing's finished. It has some problems with serving static files in prod, but I'm working on it. In the words of Armaan, "I have no idea why this isn't working." Same.
 
-Run `pipenv install -d` to install all packages needed
+### Kubernetes
 
-# Features
-* CircleCI:
-  * Workflow to test, build, publish, and deploy your django project using contexts to keep secrets safe
-* Django
-  * Multiple settings environments (development, production, and ci) each with specific configuration
-    * CI
-      * Configuration to upload test results to CircleCI
-    * Production
-      * Disable debug
-      * Enable emoji support
-      * Enable sentry reporting
-      * Restrict `ALLOWED_HOSTS`
-      * Configure Penn Labs accounts
-  * Renamed admin interface
-* Docker
-  * .dockerignore file to prevent unnecessary files from being added to the docker image
-  * Dockerfile to create a docker image to run your django project
-* Git
-  * .gitignore file to prevent common unnecessary files from being committed
-* MIT License
-* Python
-  * Common dependencies pre-configured, split into regular and development packages
-  * Testing, linting, code coverage, and uwsgi configuration
+I then made [a deployment file](k8s/labs-challenge.yaml) and deployed it to my kubernetes cluster. This cluster is in my homelab created using some [automated deployment files](https://pwpon500.github.io/posts/2019/07/automating-k3s-deployment-on-proxmox/) I created. Because the whole deploy process is automated, I could kill the entire cluster and recreate it in minutes with no reprecussions.
 
-# Configuration
-This section will lay out all the changes that need to be performed to the template configuration to use with a new app.
+### Database
 
-| File                    | Line | Description                                                                         |
-|-------------------------|------|-------------------------------------------------------------------------------------|
-| .circleci/config.yml    | 5    | Change pennlabs/example-project to the name of the new app to publish to docker hub |
-| .circleci/config.yml    | 45   | In pennlabs.settings.ci, change pennlabs to the name of your django project         |
-| .circleci/config.yml    | 119  | Change example-deploy to the CircleCI context containing production secrets         |
-| settings/base.py        | 55   | In pennlabs.urls, change pennlabs to the name of your django project                |
-| settings/base.py        | 73   | In pennlabs.wsgi.application, change pennlabs to the name of your django project    |
-| settings/ci.py          | 1    | In pennlabs.settings.base, change pennlabs to the name of your django project       |
-| settings/development.py | 1    | In pennlabs.settings.base, change pennlabs to the name of your django project       |
-| settings/production.py  | 4    | In pennlabs.settings.base, change pennlabs to the name of your django project       |
-| settings/production.py  | 16   | Change ALLOWED_HOSTS to reflect the FQDN used in production                         |
-| settings/production.py  | 28   | Change example.pennlabs.org to the FQDN used in production                          |
-| settings/production.py  | 29   | Change example_admin to the admin tag desired from platform                         |
-| settings.cfg            | 9    | Change the modules on this line to the ones created in your django project          |
-| settings.cfg            | 21   | In pennlabs.wsgi:application, change pennlabs to the name of your django project    |
-| urls.py                 | 5    | Change Pennlabs Example Admin to a descriptive name of your django project          |
+I then used KubeDB to create a [mysql manifest](k8s/labs-mysql.yaml) and applied it. Then, I pulled out the credentials from the secret KubeDB created and created a DATABASE_URL secret. I attached the DATABASE_URL secret to the main deployment, and we're all done!
 
-Also see [django-labs-accounts](https://github.com/pennlabs/django-labs-accounts) for configuration specific to Penn Labs accounts.
+## Why
+
+You may be asking "Why are you deploying this on Kubernetes? That seems way too complicated." If you only consider this project, you're absolutely right. It would be foolish to create a cluster only to host this project. However, the value from Kubernetes comes as I create more and more projects like this. Each new project is just a simmple deploy file. With that one deploy file, I get replication, automatic SSL, and easy orchestration.
+
+Also, you might be wondering why I'm using KubeDB rather than a DB hosted on a VM. The reasoning is basically the same as why I'm doing the deploy on Kubernetes. I hate making new VMs and spinning up new databases. I'd much rather just make a KubeDB manifest.

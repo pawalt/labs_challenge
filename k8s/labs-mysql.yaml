@@ -1,9 +1,9 @@
 apiVersion: kubedb.com/v1alpha1
-kind: Postgres
+kind: MySQL
 metadata:
-  name: labs-db
+  name: labs-mysql
 spec:
-  version: "11.2"
+  version: "8.0.3"
   storageType: Durable
   storage:
     storageClassName: "nfs-sc"
