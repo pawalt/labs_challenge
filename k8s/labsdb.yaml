@@ -1,0 +1,15 @@
+apiVersion: kubedb.com/v1alpha1
+kind: MySQL
+metadata:
+  name: labs-db
+spec:
+  version: "8.0.14"
+  storageType: Durable
+  storage:
+    storageClassName: "nfs-sc"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  terminationPolicy: Resume

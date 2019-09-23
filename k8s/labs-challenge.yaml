@@ -17,6 +17,13 @@ spec:
       containers:
       - name: django
         image: pwpon500/labs_challenge
+        imagePullPolicy: Always
+        env:
+          name: DJANGO_SETTINGS_MODULE
+          value: labs_challenge.settings.production
+        envFrom:
+        - secretRef:
+            name: labs-db-url
         ports:
         - containerPort: 80
 ---

@@ -2,6 +2,7 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 from labs_challenge.settings.base import *
+import os
 
 
 DEBUG = False
@@ -13,18 +14,4 @@ DATABASES['default']['OPTIONS'] = {'charset': 'utf8mb4'}
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow production host headers
-ALLOWED_HOSTS = ['example.pennlabs.org']
-
-SENTRY_URL = os.environ.get('SENTRY_URL', '')
-
-sentry_sdk.init(
-    dsn=SENTRY_URL,
-    integrations=[DjangoIntegration()]
-)
-
-# Labs Accounts Settings
-
-PLATFORM_ACCOUNTS = {
-    'REDIRECT_URI': 'https://example.pennlabs.org/accounts/callback/',
-    'ADMIN_PERMISSION': 'example_admin'
-}
+ALLOWED_HOSTS = ['labs.walthome.duckdns.org']

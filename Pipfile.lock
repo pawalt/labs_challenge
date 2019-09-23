@@ -61,14 +61,6 @@
             "index": "pypi",
             "version": "==2.2.5"
         },
-        "django-labs-accounts": {
-            "hashes": [
-                "sha256:054f3afd2f3e64adf1e727d27bb9a05a4dd66e85a65ffebe5606442ea77e4c01",
-                "sha256:792103cd39b780155b5f52c22e16290e20156b4e373c76b30feee3e565ef15d0"
-            ],
-            "index": "pypi",
-            "version": "==0.3.7"
-        },
         "idna": {
             "hashes": [
                 "sha256:c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407",
