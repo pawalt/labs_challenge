@@ -18,7 +18,7 @@ This Django boilerplate is taken from the [template-django](https://github.com/p
 
 ### Docker
 
-I then used the [django-base](https://github.com/pennlabs/) repo to build a docker image. There was just one problem. Armaan only half-finished the repo. I made a few pull requests and now the thing's finished. It has some problems with serving static files in prod, but I'm working on it. In the words of Armaan, "I have no idea why this isn't working." Same.
+I then used the [django-base](https://github.com/pennlabs/) repo to build a docker image. There was just one problem. Armaan only half-finished the repo. I made a few pull requests and now the thing's finished(ish). It has some problems with serving static files in prod, but I'm working on it. In the words of Armaan, "I have no idea why this isn't working." Same.
 
 ### Kubernetes
 
