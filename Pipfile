@@ -18,6 +18,7 @@ django = "*"
 uwsgi = "*"
 django-labs-accounts = "*"
 bs4 = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"

@@ -19,7 +19,7 @@ spec:
         image: pwpon500/labs_challenge
         imagePullPolicy: Always
         env:
-          name: DJANGO_SETTINGS_MODULE
+        - name: DJANGO_SETTINGS_MODULE
           value: labs_challenge.settings.production
         envFrom:
         - secretRef:
